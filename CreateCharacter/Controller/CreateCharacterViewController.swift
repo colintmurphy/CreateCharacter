@@ -176,7 +176,7 @@ extension CreateCharacterViewController: CountryDelegate {
     
     func returnCountryValue(with country: String) {
         
-        self.countryButton.setTitleColor(.white, for: .normal)
+        self.countryButton.setTitleColor(.label, for: .normal)
         self.countryButton.setTitle(country, for: .normal)
     }
 }
