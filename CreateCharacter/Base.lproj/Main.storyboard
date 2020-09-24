@@ -278,21 +278,17 @@
                     </view>
                     <navigationItem key="navigationItem" title="Create Character" id="y95-Hx-1A1"/>
                     <connections>
-                        <outlet property="aboutLabel" destination="Dw2-tp-GCH" id="IcZ-7V-tvw"/>
                         <outlet property="bioTextView" destination="JPg-5G-gH1" id="SgA-62-oE9"/>
                         <outlet property="birthdayTextField" destination="hGQ-4p-cl3" id="gKi-GP-G5U"/>
-                        <outlet property="contentView" destination="fFV-5O-2dn" id="t4a-Pj-A2u"/>
                         <outlet property="countryButton" destination="c9C-xr-Kba" id="QNK-bk-xf8"/>
                         <outlet property="dogCountLabel" destination="hZH-Jx-VZL" id="BEz-O3-HRd"/>
                         <outlet property="dogStepper" destination="vhr-Cd-2eP" id="rRo-Ce-XIW"/>
                         <outlet property="genderSegmentedControl" destination="XG1-zO-yo9" id="BzO-rj-4Yv"/>
                         <outlet property="heightTextField" destination="X9M-e3-aFc" id="hUz-Hi-koX"/>
-                        <outlet property="infoLabeL" destination="1HH-CP-hDv" id="U3g-BN-kAx"/>
                         <outlet property="nameTextField" destination="imd-5L-LbL" id="jL8-Uj-fu1"/>
                         <outlet property="scrollView" destination="JDT-fi-F8C" id="HQP-h7-6od"/>
                         <outlet property="weightLabel" destination="NKa-Cv-Pbw" id="fSy-Oj-UHl"/>
                         <outlet property="weightSlider" destination="jXt-kY-jws" id="ocB-Gt-aOA"/>
-                        <outlet property="wrapperView" destination="twQ-Us-IS6" id="zQn-fU-3hA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

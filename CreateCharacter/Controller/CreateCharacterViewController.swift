@@ -22,10 +22,6 @@ class CreateCharacterViewController: UIViewController {
     @IBOutlet weak var birthdayTextField: UITextField!
     @IBOutlet weak var countryButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var wrapperView: UIView!
-    @IBOutlet weak var aboutLabel: UILabel!
-    @IBOutlet weak var infoLabeL: UILabel!
     
     // MARK: - Variables
     
@@ -124,49 +120,25 @@ class CreateCharacterViewController: UIViewController {
     
     @objc func dismissKeyboard() {
         
-        if self.bioTextView.isFirstResponder {
-            if view.frame.origin.y != 0 {
-                
-                UIView.animate(withDuration: 0.2) {
-                    self.view.frame.origin.y = 0
-                }
-                self.scrollView.isScrollEnabled = true
-            }
-        }
+        self.scrollView.contentInset = UIEdgeInsets(top: self.scrollView.contentInset.top, left: 0, bottom: 0, right: 0)
         self.view.endEditing(true)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
         
         if self.bioTextView.isFirstResponder {
-            self.scrollView.isScrollEnabled = false
-            
             if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                if view.frame.origin.y == 0 {
-                    self.view.frame.origin.y -= keyboardSize.height - view.safeAreaInsets.bottom
+                self.scrollView.contentInset = UIEdgeInsets(top: self.scrollView.contentInset.top, left: 0, bottom: keyboardSize.height, right: 0)
+                
+                // If textView is hidden by keyboard, scroll it so it's visible
+                var aRect: CGRect = self.view.frame
+                aRect.size.height -= keyboardSize.height
+                
+                if let textViewRect = self.bioTextView.superview?.superview?.frame {
+                    self.scrollView.scrollRectToVisible(textViewRect, animated:true)
                 }
             }
         }
-        
-        // superview of bioTextView = horizontal stackView
-        // superview of horizontal stackView = vertical stackView
-        // superview of vertical stackView = contentView
-        
-        /*
-        if let textViewYSpace = self.bioTextView.superview?.superview?.superview?.frame.maxY {
-            if self.bioTextView.isFirstResponder {
-                self.scrollView.isScrollEnabled = false
-                
-                if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                    if view.frame.origin.y == 0 {
-                        
-                        let space = self.view.frame.height - textViewYSpace
-                        print(self.view.frame.height, " ", textViewYSpace, " ", space)
-                        //self.view.frame.origin.y -= keyboardSize.height - view.safeAreaInsets.bottom // - space
-                    }
-                }
-            }
-        }*/
     }
 }
 
@@ -183,15 +155,7 @@ extension CreateCharacterViewController: CountryDelegate {
 
 // MARK: - UIPickerViewDelegate
 
-extension CreateCharacterViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 2
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.heightArr[component].count
-    }
+extension CreateCharacterViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.heightArr[component][row]
@@ -207,5 +171,18 @@ extension CreateCharacterViewController: UIPickerViewDelegate, UIPickerViewDataS
         } else {
             self.heightTextField.text = feet + "ft " + inches + "in"
         }
+    }
+}
+
+// MARK: - UIPickerViewDataSource
+
+extension CreateCharacterViewController: UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 2
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.heightArr[component].count
     }
 }
