@@ -25,6 +25,7 @@ class CreateCharacterViewController: UIViewController {
     
     // MARK: - Variables
     
+    var activeTextView: UITextView?
     let datePicker = UIDatePicker()
     let heightPicker = UIPickerView()
     let heightArr = [ ["Feet", "3", "4", "5", "6", "7"],
@@ -39,8 +40,9 @@ class CreateCharacterViewController: UIViewController {
         self.setupPickers()
         self.setupTextViews()
         self.setupTextFields()
+        
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard)))
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,6 +106,7 @@ class CreateCharacterViewController: UIViewController {
     
     func setupTextViews() {
         
+        self.bioTextView.delegate = self
         self.bioTextView.layer.cornerRadius = 10
         self.bioTextView.layer.borderWidth = 1.0
         self.bioTextView.layer.borderColor  = UIColor.systemGray.cgColor
@@ -120,23 +123,26 @@ class CreateCharacterViewController: UIViewController {
     
     @objc func dismissKeyboard() {
         
-        self.scrollView.contentInset = UIEdgeInsets(top: self.scrollView.contentInset.top, left: 0, bottom: 0, right: 0)
+        self.scrollView.contentInset = .zero
+        self.scrollView.scrollIndicatorInsets = .zero
         self.view.endEditing(true)
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
+    @objc func keyboardDidShow(notification: NSNotification) {
         
-        if self.bioTextView.isFirstResponder {
-            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                self.scrollView.contentInset = UIEdgeInsets(top: self.scrollView.contentInset.top, left: 0, bottom: keyboardSize.height, right: 0)
-                
-                // If textView is hidden by keyboard, scroll it so it's visible
-                var aRect: CGRect = self.view.frame
-                aRect.size.height -= keyboardSize.height
-                
-                if let textViewRect = self.bioTextView.superview?.superview?.frame {
-                    self.scrollView.scrollRectToVisible(textViewRect, animated:true)
-                }
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size,
+           let textView = self.activeTextView,
+           let horizontalStackView = textView.superview {
+            
+            let contentInsets = UIEdgeInsets(top: self.scrollView.contentInset.top, left: 0, bottom: keyboardSize.height, right: 0)
+            self.scrollView.contentInset = contentInsets
+            self.scrollView.scrollIndicatorInsets = contentInsets
+            
+            var aRect: CGRect = self.view.frame
+            aRect.size.height -= keyboardSize.height
+            
+            if !aRect.contains(horizontalStackView.frame.origin) {
+                self.scrollView.scrollRectToVisible(horizontalStackView.frame, animated: true)
             }
         }
     }
@@ -184,5 +190,18 @@ extension CreateCharacterViewController: UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.heightArr[component].count
+    }
+}
+
+// MARK: - UITextViewDelegate
+
+extension CreateCharacterViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        self.activeTextView = textView
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        self.activeTextView = nil
     }
 }
