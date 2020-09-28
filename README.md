@@ -1,7 +1,7 @@
 # CreateCharacter
 
 ## About
-A simple app that utalizes the following UI components:
+A simple app that utilizes the following UI components:
 - UITextField
 - UITextView
 - UILabel
