@@ -46,6 +46,7 @@
 			children = (
 				218E6A5E251C237B00CDF900 /* LaunchScreen.storyboard */,
 				218E6A5C251C237B00CDF900 /* Assets.xcassets */,
+				218E6A61251C237B00CDF900 /* Info.plist */,
 				218E6A53251C237900CDF900 /* AppDelegate.swift */,
 				218E6A55251C237900CDF900 /* SceneDelegate.swift */,
 			);
@@ -99,10 +100,17 @@
 				2168C090251CF73700B23AA8 /* Support */,
 				2168C091251CF75000B23AA8 /* Controller */,
 				2168C093251CF78500B23AA8 /* View */,
-				218E6A59251C237900CDF900 /* Main.storyboard */,
-				218E6A61251C237B00CDF900 /* Info.plist */,
+				21A715432523EBA300ABA998 /* Storyboard */,
 			);
 			path = CreateCharacter;
+			sourceTree = "<group>";
+		};
+		21A715432523EBA300ABA998 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				218E6A59251C237900CDF900 /* Main.storyboard */,
+			);
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,7 +336,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 69P6K7C2T4;
-				INFOPLIST_FILE = CreateCharacter/Info.plist;
+				INFOPLIST_FILE = CreateCharacter/Support/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -347,7 +355,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 69P6K7C2T4;
-				INFOPLIST_FILE = CreateCharacter/Info.plist;
+				INFOPLIST_FILE = CreateCharacter/Support/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

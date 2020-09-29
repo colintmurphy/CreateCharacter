@@ -11,24 +11,24 @@ class CreateCharacterViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var genderSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var weightSlider: UISlider!
-    @IBOutlet weak var weightLabel: UILabel!
-    @IBOutlet weak var dogStepper: UIStepper!
-    @IBOutlet weak var dogCountLabel: UILabel!
-    @IBOutlet weak var bioTextView: UITextView!
-    @IBOutlet weak var heightTextField: UITextField!
-    @IBOutlet weak var birthdayTextField: UITextField!
-    @IBOutlet weak var countryButton: UIButton!
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet private weak var nameTextField: UITextField!
+    @IBOutlet private weak var genderSegmentedControl: UISegmentedControl!
+    @IBOutlet private weak var weightSlider: UISlider!
+    @IBOutlet private weak var weightLabel: UILabel!
+    @IBOutlet private weak var dogStepper: UIStepper!
+    @IBOutlet private weak var dogCountLabel: UILabel!
+    @IBOutlet private weak var bioTextView: UITextView!
+    @IBOutlet private weak var heightTextField: UITextField!
+    @IBOutlet private weak var birthdayTextField: UITextField!
+    @IBOutlet private weak var countryButton: UIButton!
+    @IBOutlet private weak var scrollView: UIScrollView!
     
     // MARK: - Variables
     
-    var activeTextView: UITextView?
-    let datePicker = UIDatePicker()
-    let heightPicker = UIPickerView()
-    let heightArr = [ ["Feet", "3", "4", "5", "6", "7"],
+    private var activeTextView: UITextView?
+    private let datePicker = UIDatePicker()
+    private let heightPicker = UIPickerView()
+    private let heightArr = [ ["Feet", "3", "4", "5", "6", "7"],
                       ["Inches", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"] ]
     
     // MARK: - View Life Cycles
@@ -53,7 +53,7 @@ class CreateCharacterViewController: UIViewController {
     
     // MARK: - Method Actions
     
-    @objc func dateChange() {
+    @objc private func dateChange() {
         
         let cal = Calendar.current
         let components = cal.dateComponents([.day, .month, .year] , from: self.datePicker.date)
@@ -65,11 +65,11 @@ class CreateCharacterViewController: UIViewController {
         }
     }
     
-    @objc func numberOfDogsChanged() {
+    @objc private func numberOfDogsChanged() {
         self.dogCountLabel.text = "Count \(Int(self.dogStepper.value))"
     }
     
-    @objc func weightChanged() {
+    @objc private func weightChanged() {
         self.weightLabel.text = "\(Int(self.weightSlider.value)) lbs"
     }
     
@@ -86,14 +86,14 @@ class CreateCharacterViewController: UIViewController {
     
     // MARK: - Setup
     
-    func setupStepperAndSlider() {
+    private func setupStepperAndSlider() {
         
         self.weightSlider.value = 200
         self.weightSlider.addTarget(self, action: #selector(weightChanged), for: .valueChanged)
         self.dogStepper.addTarget(self, action: #selector(numberOfDogsChanged), for: .valueChanged)
     }
     
-    func setupPickers() {
+    private func setupPickers() {
         
         self.birthdayTextField.inputView = datePicker
         self.datePicker.datePickerMode = .date
@@ -104,7 +104,7 @@ class CreateCharacterViewController: UIViewController {
         self.heightPicker.delegate = self
     }
     
-    func setupTextViews() {
+    private func setupTextViews() {
         
         self.bioTextView.delegate = self
         self.bioTextView.layer.cornerRadius = 10
@@ -112,7 +112,7 @@ class CreateCharacterViewController: UIViewController {
         self.bioTextView.layer.borderColor  = UIColor.systemGray.cgColor
     }
     
-    func setupTextFields() {
+    private func setupTextFields() {
         
         self.nameTextField.layer.cornerRadius = 10
         self.nameTextField.layer.borderWidth = 1.0
@@ -121,14 +121,14 @@ class CreateCharacterViewController: UIViewController {
     
     // MARK: - Keyboard
     
-    @objc func dismissKeyboard() {
+    @objc private func dismissKeyboard() {
         
         self.scrollView.contentInset = .zero
         self.scrollView.scrollIndicatorInsets = .zero
         self.view.endEditing(true)
     }
     
-    @objc func keyboardDidShow(notification: NSNotification) {
+    @objc private func keyboardDidShow(notification: NSNotification) {
         
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size,
            let textView = self.activeTextView,
