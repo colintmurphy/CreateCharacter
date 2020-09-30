@@ -42,7 +42,7 @@ class CreateCharacterViewController: UIViewController {
         self.setupTextFields()
         
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard)))
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardDidShow), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -120,29 +120,26 @@ class CreateCharacterViewController: UIViewController {
     }
     
     // MARK: - Keyboard
-    
+        
     @objc private func dismissKeyboard() {
         
-        self.scrollView.contentInset = .zero
-        self.scrollView.scrollIndicatorInsets = .zero
+        self.scrollView.contentInset = UIEdgeInsets(top: self.scrollView.contentInset.top, left: 0, bottom: 0, right: 0)
         self.view.endEditing(true)
     }
     
-    @objc private func keyboardDidShow(notification: NSNotification) {
+    @objc private func keyboardWillShow(notification: NSNotification) {
         
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size,
-           let textView = self.activeTextView,
-           let horizontalStackView = textView.superview {
-            
-            let contentInsets = UIEdgeInsets(top: self.scrollView.contentInset.top, left: 0, bottom: keyboardSize.height, right: 0)
-            self.scrollView.contentInset = contentInsets
-            self.scrollView.scrollIndicatorInsets = contentInsets
-            
-            var aRect: CGRect = self.view.frame
-            aRect.size.height -= keyboardSize.height
-            
-            if !aRect.contains(horizontalStackView.frame.origin) {
-                self.scrollView.scrollRectToVisible(horizontalStackView.frame, animated: true)
+        if self.bioTextView.isFirstResponder {
+            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                self.scrollView.contentInset = UIEdgeInsets(top: self.scrollView.contentInset.top, left: 0, bottom: keyboardSize.height, right: 0)
+                
+                // If textView is hidden by keyboard, scroll it so it's visible
+                var aRect: CGRect = self.view.frame
+                aRect.size.height -= keyboardSize.height
+                
+                if let textViewRect = self.bioTextView.superview?.superview?.frame {
+                    self.scrollView.scrollRectToVisible(textViewRect, animated:true)
+                }
             }
         }
     }
