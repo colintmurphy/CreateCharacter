@@ -56,7 +56,7 @@ class CreateCharacterViewController: UIViewController {
     @objc private func dateChange() {
         
         let cal = Calendar.current
-        let components = cal.dateComponents([.day, .month, .year] , from: self.datePicker.date)
+        let components = cal.dateComponents([.day, .month, .year], from: self.datePicker.date)
         
         if let month = components.month,
            let day = components.day,
