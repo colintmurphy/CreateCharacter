@@ -5,18 +5,16 @@ A simple app that utilizes the following UI components:
 - UITextField
 - UITextView
 - UILabel
-
 - UIButton
 - UISearchBar
 - UISlider
 - UIStepper
 - UISegmentedControl
-
 - UIDatePicker
 - UIPickerView
-
 - UIScrollView
 - UITableView
+- Keyboard Handling
 
 ## Images
 
