@@ -9,7 +9,7 @@ import UIKit
 
 class CountryTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var countryNameLabel: UILabel!
+    @IBOutlet private weak var countryNameLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -17,5 +17,9 @@ class CountryTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func set(title: String) {
+        self.countryNameLabel.text = title
     }
 }

@@ -28,8 +28,10 @@ class CreateCharacterViewController: UIViewController {
     private var activeTextView: UITextView?
     private let datePicker = UIDatePicker()
     private let heightPicker = UIPickerView()
-    private let heightArr = [ ["Feet", "3", "4", "5", "6", "7"],
-                      ["Inches", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"] ]
+    private let heightArr = [
+        ["Feet", "3", "4", "5", "6", "7"],
+        ["Inches", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    ]
     
     // MARK: - View Life Cycles
     
@@ -78,8 +80,8 @@ class CreateCharacterViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "toCountries" {
-            if let vc = segue.destination as? CountryViewController {
-                vc.delegate = self
+            if let countryVC = segue.destination as? CountryViewController {
+                countryVC.delegate = self
             }
         }
     }
@@ -109,14 +111,14 @@ class CreateCharacterViewController: UIViewController {
         self.bioTextView.delegate = self
         self.bioTextView.layer.cornerRadius = 10
         self.bioTextView.layer.borderWidth = 1.0
-        self.bioTextView.layer.borderColor  = UIColor.systemGray.cgColor
+        self.bioTextView.layer.borderColor = UIColor.systemGray.cgColor
     }
     
     private func setupTextFields() {
         
         self.nameTextField.layer.cornerRadius = 10
         self.nameTextField.layer.borderWidth = 1.0
-        self.nameTextField.layer.borderColor  = UIColor.systemGray.cgColor
+        self.nameTextField.layer.borderColor = UIColor.systemGray.cgColor
     }
     
     // MARK: - Keyboard
@@ -138,7 +140,7 @@ class CreateCharacterViewController: UIViewController {
                 aRect.size.height -= keyboardSize.height
                 
                 if let textViewRect = self.bioTextView.superview?.superview?.frame {
-                    self.scrollView.scrollRectToVisible(textViewRect, animated:true)
+                    self.scrollView.scrollRectToVisible(textViewRect, animated: true)
                 }
             }
         }
@@ -151,7 +153,11 @@ extension CreateCharacterViewController: CountryDelegate {
     
     func returnCountryValue(with country: String) {
         
-        self.countryButton.setTitleColor(.label, for: .normal)
+        if #available(iOS 13.0, *) {
+            self.countryButton.setTitleColor(.label, for: .normal)
+        } else {
+            self.countryButton.setTitleColor(.black, for: .normal)
+        }
         self.countryButton.setTitle(country, for: .normal)
     }
 }
