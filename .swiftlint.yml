@@ -1,4 +1,3 @@
-
 opt_in_rules:
 - anyobject_protocol
 - closing_brace
@@ -50,6 +49,7 @@ opt_in_rules:
 - identical_operands
 - identifier_name
 - implicit_getter
+- implicitly_unwrapped_optional
 - joined_default_parameter
 - large_tuple
 - last_where
